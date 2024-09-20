@@ -38,7 +38,7 @@ void SortedBag::add(TComp e) {
     }
 
     
-    //3. current reached end of DLL  && //2.
+    //3. current reached end of DLL && //2.
     if (current == nullptr) {
         newNode->prev = tail;
         tail->next = newNode;
@@ -55,13 +55,62 @@ void SortedBag::add(TComp e) {
             head = newNode;
         }
     }
-    
+    nrElems++;
 }
 
 
 bool SortedBag::remove(TComp e) {
-	//TODO - Implementation
-	return false;
+	// init current and move to elem
+    Node* current = head;
+    while (current != nullptr && current->elem.first != e)
+    {
+        current = current->next;
+    }
+
+    //del node init
+    Node* deletedNode = current;
+
+    //if current is null , elem not found case
+    if (current == nullptr)
+    {
+        return false;
+    }
+
+    //if current != null the element was found
+    if (current != nullptr)
+    {
+        //if it's first element (head) case
+        if (current == head)
+        {
+            head = current->next;
+            if (head != nullptr)
+            {
+                head->prev = nullptr;
+            }
+            else {
+                tail = nullptr;
+            }
+        }
+        //if it's last element (tail) case
+        else if (current == tail)
+        {
+            tail = current->prev;
+            tail->next = nullptr;
+        }
+        //if it's a middle element in the list
+        //link the neighbouring elements together bypassing the current
+        //node you want to get rid of
+        else
+        {
+            current->next->prev = current->prev;
+            current->prev->next = current->next;
+      
+        }
+    }
+
+    delete current;
+    nrElems--;
+	return true;
 }
 
 
