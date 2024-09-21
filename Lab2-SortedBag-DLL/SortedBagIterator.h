@@ -10,8 +10,9 @@ class SortedBagIterator
 private:
 	const SortedBag& bag;
 	SortedBagIterator(const SortedBag& b);
-
-	//TODO - Representation
+    
+    SortedBag::Node *  currentElem;
+    int freqCounter;
 
 public:
 	TComp getCurrent();

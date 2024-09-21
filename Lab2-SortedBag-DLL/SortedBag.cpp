@@ -14,7 +14,7 @@ void SortedBag::add(TComp e) {
     //2. add in between elements
     //3. add at the end of the list because it's larger than all
 
-    TElem newElem = std::pair(e, 1);
+    TPair newElem = std::pair(e, 1);
     Node * newNode = new Node(newElem);
 
     //0.
@@ -67,45 +67,38 @@ bool SortedBag::remove(TComp e) {
         current = current->next;
     }
 
-    //del node init
-    Node* deletedNode = current;
-
     //if current is null , elem not found case
     if (current == nullptr)
     {
         return false;
     }
 
-    //if current != null the element was found
-    if (current != nullptr)
+    //if it's first element (head) case
+    if (current == head)
     {
-        //if it's first element (head) case
-        if (current == head)
+        head = current->next;
+        if (head != nullptr)
         {
-            head = current->next;
-            if (head != nullptr)
-            {
-                head->prev = nullptr;
-            }
-            else {
-                tail = nullptr;
-            }
+            head->prev = nullptr;
         }
-        //if it's last element (tail) case
-        else if (current == tail)
-        {
-            tail = current->prev;
-            tail->next = nullptr;
+        else {
+            tail = nullptr;
         }
-        //if it's a middle element in the list
-        //link the neighbouring elements together bypassing the current
-        //node you want to get rid of
-        else
-        {
-            current->next->prev = current->prev;
-            current->prev->next = current->next;
-      
-        }
+    }
+    //if it's last element (tail) case
+    else if (current == tail)
+    {
+        tail = current->prev;
+        tail->next = nullptr;
+    }
+    //if it's a middle element in the list
+    //link the neighbouring elements together bypassing the current
+    //node you want to get rid of
+    else
+    {
+        current->next->prev = current->prev;
+        current->prev->next = current->next;
+  
     }
 
     delete current;

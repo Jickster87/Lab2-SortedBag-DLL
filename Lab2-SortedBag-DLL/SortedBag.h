@@ -4,8 +4,9 @@
 
 //DO NOT CHANGE THIS PART
 typedef int TComp;
-//typedef TComp TElem;
-typedef std::pair<TComp, TComp> TElem;
+typedef TComp TElem;
+typedef int TFreq;
+typedef std::pair<TElem, TFreq> TPair;
 typedef bool(*Relation)(TComp, TComp);
 #define NULL_TCOMP -11111;
 
@@ -17,10 +18,10 @@ class SortedBag {
 private:
 	
     struct Node {
-        TElem elem;
+        TPair elem;
         Node * prev;
         Node * next;
-        Node(const TElem& e): elem(e), next(nullptr), prev(nullptr){};
+        Node(const TPair& e): elem(e), next(nullptr), prev(nullptr){};
     };
     
     Node * head;
